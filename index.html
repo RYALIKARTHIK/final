@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invest in Middle Class</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            background: url('https://i.ibb.co/ZpMn7Zzh/output.png') 
+                        no-repeat center center/cover;
+            color: white;
+            font-family: 'Georgia', serif;
+            position: relative;
+        }
+        /* Profile Picture (Hidden on Mobile) */
+        .profile-pic {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid gold;
+            box-shadow: 0px 0px 10px black;
+        }
+        @media (max-width: 768px) {
+            .profile-pic {
+                display: none;
+            }
+        }
+        h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: gold; 
+            text-shadow: 3px 3px 10px black;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px 30px;
+            border: 4px solid gold;
+            border-radius: 15px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .invest-btn {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            background: gold;
+            border: 3px solid white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+        .invest-btn:hover {
+            background: darkgoldenrod;
+            border-color: gold;
+        }
+        /* QR Code Popup */
+        .qr-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        .qr-popup img {
+            width: 250px;
+            height: auto;
+            border-radius: 10px;
+            border: 2px solid black;
+        }
+        .close-btn {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .close-btn:hover {
+            background: darkred;
+        }
+        /* Agreement Text */
+        .agreement {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+            border: 3px solid gold;
+            max-width: 80%;
+        }
+        /* Form Styling */
+        form {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            border: 3px solid gold;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 300px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        button {
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            background: gold;
+            border: 3px solid white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: darkgoldenrod;
+            border-color: gold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Profile Picture (Hidden on Mobile) -->
+    <img src="https://i.ibb.co/yFMkhYwM/my-passport-photo-1.jpg" alt="Profile Picture" class="profile-pic">
+    
+    <h1>Welcome Everyone <br> Invest in Middle Class</h1>
+    
+    <!-- Invest Button -->
+    <button class="invest-btn" onclick="handleInvest()">Invest 1 Rupee</button> 
+    
+    <!-- QR Code Popup -->
+    <div class="qr-popup" id="qrPopup">
+        <img src="https://i.ibb.co/q3N7sJNh/invest.png" alt="PhonePe QR Code">
+        <br>
+        <button class="close-btn" onclick="hideQR()">Close</button>
+    </div>
+
+    <!-- Agreement -->
+    <div class="agreement">
+        <p>Agreement: Pay 1 Rs wisely, otherwise the bond terminates automatically. This is a 7-year bond, where the user pays 1 Rs a total of 1000 times over 7 years (1 Rs at a time, not 1000 Rs immediately). Over 7 years, the user will have paid 1000 Rs.</p>
+    </div>
+
+    <!-- User Registration Form -->
+    <form id="userForm">
+        <input type="text" id="name" placeholder="Enter your name" required>
+        <input type="text" id="phone" placeholder="Enter your phone" required>
+        <input type="email" id="email" placeholder="Enter your email" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        function handleInvest() {
+            if (/Mobi|Android/i.test(navigator.userAgent)) {
+                // Redirect mobile users to UPI payment
+                window.location.href = "upi://pay?pa=bunny3karthik-1@okaxis&pn=Invest%20in%20Middle%20Class&mc=1234&tid=123456789&tr=INVEST1RS&tn=Pay%201%20Rupee&am=1&cu=INR";
+            } else {
+                // Show QR popup for PC users
+                document.getElementById("qrPopup").style.display = "block";
+            }
+        }
+
+        function hideQR() {
+            document.getElementById("qrPopup").style.display = "none";
+        }
+
+        document.getElementById("userForm").addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const phone = document.getElementById("phone").value;
+            const email = document.getElementById("email").value;
+
+            const userData = {
+                id: 0,  // The backend should auto-generate the ID
+                name: name,
+                phone: phone,
+                email: email
+            };
+
+            try {
+                const response = await fetch("http://localhost:5252/api/users", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "*/*"
+                    },
+                    body: JSON.stringify(userData)
+                });
+
+                if (response.ok) {
+                    alert("User registered successfully!");
+                } else {
+                    alert("Error: Unable to register user.");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Something went wrong!");
+            }
+        });
+    </script>
+</body>
+</html>
